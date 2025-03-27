@@ -1,0 +1,33 @@
+{
+  "id": "7405b2dd-f53b-43e2-ba6a-1a8dfa7d105b",
+  "name": "KCAU Sacco ERP",
+  "publisher": "Mathew Moroko",
+  "version": "1.0.0.30",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "target": "OnPrem",
+  "suppressWarnings": ["AL0118","AL0604","AL0132","AL0269","AL0202","AL0603","AL0589","AL0667","AL0432","AL0523","AL0606","AL0600","AL0482"],
+  "screenshots": [],
+  "platform": "1.0.0.2",
+  "application": "23.0.0.0",
+
+  "idRanges": [
+    {
+      "from": 1,
+      "to":  51516999
+    }
+  ],
+  
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+ "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "12.0"
+}
