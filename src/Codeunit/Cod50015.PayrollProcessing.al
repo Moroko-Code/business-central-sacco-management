@@ -63,7 +63,7 @@ Codeunit 50015 "Payroll Processing"
     procedure fnInitialize()
     begin
         HrEmployee.Reset;
-        HrEmployee.SetRange(HrEmployee."No.", HrEmployee."No.");
+        HrEmployee.SetRange("No.", HrEmployee."No.");
         if HrEmployee.Find('-') then
             VitalSetup.FindFirst;
         with VitalSetup do begin
@@ -182,7 +182,6 @@ Codeunit 50015 "Payroll Processing"
                 DaysWorked := fnDaysWorked(dtDOE, false);
                 curBasicPay := fnBasicPayProrated(strEmpCode, intMonth, intYear, curBasicPay, DaysWorked, CountDaysofMonth)
             end;
-
             //Prorate Basic Pay on    {What if someone leaves within the same month they are employed}
             if dtTermination <> 0D then
                 if (Date2dmy(dtTermination, 2) = Date2dmy(dtOpenPeriod, 2)) and (Date2dmy(dtTermination, 3) = Date2dmy(dtOpenPeriod, 3)) then begin
@@ -190,7 +189,6 @@ Codeunit 50015 "Payroll Processing"
                     DaysWorked := fnDaysWorked(dtTermination, true);
                     curBasicPay := fnBasicPayProrated(strEmpCode, intMonth, intYear, curBasicPay, DaysWorked, CountDaysofMonth)
                 end;
-
             curTransAmount := curBasicPay;
             strTransDescription := 'Basic Pay';
             TGroup := 'BASIC SALARY';
@@ -594,13 +592,13 @@ Codeunit 50015 "Payroll Processing"
         prEmployeeTransactions.SetRange(prEmployeeTransactions."Period Month", intMonth);
         prEmployeeTransactions.SetRange(prEmployeeTransactions."Period Year", intYear);
         // prEmployeeTransactions.SetRange(prEmployeeTransactions."Loan Number", '');
-        prEmployeeTransactions.SetRange(prEmployeeTransactions.Suspended, false);
+        prEmployeeTransactions.SetRange(Suspended, false);
         if prEmployeeTransactions.Find('-') then begin
             curTotalDeductions := 0;
             repeat
                 prTransactionCodes.Reset;
-                prTransactionCodes.SetRange(prTransactionCodes."Transaction Code", prEmployeeTransactions."Transaction Code");
-                prTransactionCodes.SetRange(prTransactionCodes."Transaction Type", prTransactionCodes."transaction type"::Deduction);
+                prTransactionCodes.SetRange("Transaction Code", prEmployeeTransactions."Transaction Code");
+                prTransactionCodes.SetRange("Transaction Type", prTransactionCodes."transaction type"::Deduction);
                 //prTransactionCodes.SetRange(prTransactionCodes."IsCo-Op/LnRep", true);
                 if prTransactionCodes.Find('-') then begin
                     curTransAmount := 0;

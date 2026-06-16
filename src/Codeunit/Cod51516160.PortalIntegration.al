@@ -89,7 +89,6 @@ codeunit 50039 "Portal Integration"
             NoKFound := True
         else
             NoKFound := false;
-        //end;
     end;
 
     procedure FnSendOTP(emailAddress: Text) response: Text
@@ -135,7 +134,7 @@ codeunit 50039 "Portal Integration"
     var
     begin
         MobileDetails.Reset();
-        MobileDetails.SetRange(MobileDetails.Email, LowerCase(emailAddress));
+        MobileDetails.SetRange(Email, LowerCase(emailAddress));
         if MobileDetails.Find('-') then begin
             //MobileDetails.Init();
             MobileDetails.Password := hashedPassword;
@@ -170,9 +169,9 @@ codeunit 50039 "Portal Integration"
 
         Members.Reset();
         // Members.SetRange(Members."E-Mail", LowerCase(Email));
-        Members.SetRange(Members."No.", BulShoNo);
+        Members.SetRange("No.", BulShoNo);
         if Members.Find('-') then begin
-            Members.CalcFields(Members."Shares Retained");
+            Members.CalcFields("Shares Retained");
             returnT := Format(Members."Shares Retained");
         end else begin
             returnT := '';
@@ -180,7 +179,6 @@ codeunit 50039 "Portal Integration"
     end;
 
     procedure fnGetMemberNo(Email: text[100]) returnE: code[100]
-
     begin
         members.reset;
         Members.setrange(Members."E-Mail", LowerCase(Email));
@@ -188,7 +186,6 @@ codeunit 50039 "Portal Integration"
             returnE := Members."No."
         end else
             returnE := 'No';
-
     end;
 
     procedure fnGetMemberNo1(Value: Text[100]; var returnE: Code[100])
@@ -205,7 +202,7 @@ codeunit 50039 "Portal Integration"
 
         // If not found by email, check by username
         MobileDetails.Reset();
-        MobileDetails.SetRange(MobileDetails.Username, LowerCase(Value));
+        MobileDetails.SetRange(Username, LowerCase(Value));
         if MobileDetails.Find('-') then begin
             //returnE := MobileDetails."MemberNo.";
             exit; // Exit if found by username
@@ -481,6 +478,7 @@ codeunit 50039 "Portal Integration"
             exit(Base64.ToBase64(InS));
         end;
     end;
+
     //Loan Guarantors
     procedure FnGetMemberLoansGuaranteed(MemberNo: Code[50]): Text
     var
@@ -492,7 +490,7 @@ codeunit 50039 "Portal Integration"
         Cust: Record Customer;
     begin
         Cust.Reset();
-        Cust.SetRange(Cust."No.", UpperCase(MemberNo));
+        Cust.SetRange("No.", UpperCase(MemberNo));
         if Cust.FindFirst() then begin
             RecRef.GetTable(Cust);
             TempBlob.CreateOutStream(Outs);
@@ -500,6 +498,11 @@ codeunit 50039 "Portal Integration"
             TempBlob.CreateInStream(InS);
             exit(Base64.ToBase64(InS));
         end;
+    end;
+
+    procedure FnGetLoanGuarantorsPdf(MemberNo: Code[50]): Text
+    begin
+        exit(FnGetMemberLoansGuaranteed(MemberNo));
     end;
     //Loans Guaranteed
     procedure FnGetMemberLoansGuarantors(MemberNo: Code[50]): Text
@@ -513,7 +516,7 @@ codeunit 50039 "Portal Integration"
     begin
 
         Cust.Reset();
-        Cust.SetRange(Cust."No.", UpperCase(MemberNo));
+        Cust.SetRange("No.", UpperCase(MemberNo));
         if Cust.FindFirst() then begin
             RecRef.GetTable(Cust);
             TempBlob.CreateOutStream(Outs);
@@ -534,7 +537,7 @@ codeunit 50039 "Portal Integration"
     begin
 
         Cust.Reset();
-        Cust.SetRange(Cust."No.", UpperCase(MemberNo));
+        Cust.SetRange("No.", UpperCase(MemberNo));
         Cust.SetFilter("Date filter", '%1..%2', StartDate, EndDate);
         if Cust.FindFirst() then begin
             RecRef.GetTable(Cust);
@@ -640,8 +643,8 @@ codeunit 50039 "Portal Integration"
     var
     begin
         MobileDetails.Reset();
-        MobileDetails.SetRange(MobileDetails.OTP, otp);
-        MobileDetails.SetRange(MobileDetails.ID_Number, memberid);
+        MobileDetails.SetRange(OTP, otp);
+        MobileDetails.SetRange(ID_Number, memberid);
         if MobileDetails.Find('-') then begin
             MobileDetails.Modify();
             response := 'OTP verified successfully';
@@ -656,12 +659,12 @@ codeunit 50039 "Portal Integration"
     begin
         //Check if the username is Already used....
         MobileDetails.Reset();
-        MobileDetails.SetRange(MobileDetails.Username, Lowercase(username));
+        MobileDetails.SetRange(Username, Lowercase(username));
         if MobileDetails.Find('-') then begin
             response := 'Username in use';
         end else begin
             MobileDetails.Reset();
-            MobileDetails.SetRange(MobileDetails.ID_Number, memberid);
+            MobileDetails.SetRange(ID_Number, memberid);
             if MobileDetails.Find('-') then begin
                 MobileDetails.OTP := 0;
                 MobileDetails.Activated := TRUE;
@@ -681,9 +684,9 @@ codeunit 50039 "Portal Integration"
     procedure FnLogin(username: Text; password: Text) response: Text
     begin
         MobileDetails.Reset();
-        MobileDetails.SetRange(MobileDetails.ID_Number, LowerCase(username));
+        MobileDetails.SetRange(ID_Number, LowerCase(username));
         if MobileDetails.Find('-') then begin
-            MobileDetails.SetRange(MobileDetails.Activated, TRUE);
+            MobileDetails.SetRange(Activated, TRUE);
             if MobileDetails.Find('-') then begin
                 response := MobileDetails.Password;
                 exit;
@@ -693,7 +696,7 @@ codeunit 50039 "Portal Integration"
             end;
         end else begin
             MobileDetails.Reset();
-            MobileDetails.SetRange(MobileDetails.Username, LowerCase(username));
+            MobileDetails.SetRange(Username, LowerCase(username));
             if MobileDetails.Find('-') then begin
                 response := MobileDetails.MemberNo + '::' + MobileDetails.Password;
                 exit;

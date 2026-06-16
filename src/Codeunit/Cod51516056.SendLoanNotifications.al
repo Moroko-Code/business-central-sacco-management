@@ -4,8 +4,6 @@ codeunit 51516056 "Send Loan Notifications"
     begin
     end;
 
-    
-
     local procedure FnNextLoanRepaymentDate(LoanNo: Code[30]; NextLoanRepaymentDay: Date): Boolean
     var
         LoansRepaymentSchedule: record "Loan Repayment Schedule";
@@ -23,7 +21,7 @@ codeunit 51516056 "Send Loan Notifications"
         VendorTable: Record Vendor;
     begin
         VendorTable.Reset();
-        VendorTable.SetRange(VendorTable."No.", FOSAAccount);
+        VendorTable.SetRange("No.", FOSAAccount);
         if VendorTable.Find('-') then
             exit(VendorTable."Phone No.");
     end;

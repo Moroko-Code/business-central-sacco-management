@@ -51,7 +51,7 @@ Codeunit 51516000 "Funds Management"
         // GenJnlLine."Transaction Type":=
         GenJnlLine."Currency Factor" := PaymentHeader."Currency Factor";
         GenJnlLine.Validate("Currency Factor");
-        GenJnlLine.Amount := -(PaymentHeader."Net Amount");  //Credit Amount
+        GenJnlLine.Amount := -(PaymentHeader."Net Amount");  //Credit bank account
         GenJnlLine.Validate(GenJnlLine.Amount);
         GenJnlLine."Bal. Account Type" := GenJnlLine."bal. account type"::"G/L Account";
         GenJnlLine."Bal. Account No." := '';
@@ -97,7 +97,7 @@ Codeunit 51516000 "Funds Management"
                 GenJnlLine.Validate("Currency Code");
                 GenJnlLine."Currency Factor" := PaymentHeader."Currency Factor";
                 GenJnlLine.Validate("Currency Factor");
-                GenJnlLine.Amount := PaymentLine."Net Amount";  //Debit Amount
+                GenJnlLine.Amount := PaymentLine."Net Amount";  //Debit respective lines
                 GenJnlLine.Validate(GenJnlLine.Amount);
                 GenJnlLine."Transaction Type" := PaymentLine."Transaction Type";
                 GenJnlLine."Loan No" := PaymentLine."Loan No.";

@@ -1418,7 +1418,7 @@ Table 51516230 "Loans Register"
         }
         field(69025; "Repayment Frequency"; Option)
         {
-            OptionCaption = 'Daily,Weekly,Monthly,Quaterly';
+            OptionCaption = ' ,Daily,Weekly,Monthly,Quaterly';
             OptionMembers = Daily,Weekly,Monthly,Quaterly;
             //initvalue = 'Monthly';
             trigger OnValidate()
